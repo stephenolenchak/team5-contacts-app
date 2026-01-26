@@ -10,9 +10,10 @@ export const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1, textDecoration: "none", color: "inherit"}}>
+          <Typography variant="h6" component={Link} to="/" sx={{ textDecoration: "none", color: "inherit"}}>
             Clean Contacts
           </Typography>
+          <Box sx={{ flexGrow: 1}}></Box>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
