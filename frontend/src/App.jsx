@@ -11,6 +11,7 @@ import { IndexPage } from "./pages/IndexPage";
 import Box from '@mui/material/Box';
 import Footer from './components/Footer';
 import { Grow } from '@mui/material';
+import { DashboardPage } from './pages/DashboardPage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -27,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </Box>
          </Grow>
