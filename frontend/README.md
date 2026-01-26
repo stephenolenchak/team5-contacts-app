@@ -1,16 +1,48 @@
-# React + Vite
+# Clean Contacts Front End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Prerequisites
+- A Linux machine or Linux VM  
+  - If you’re on Windows, WSL with Ubuntu is recommended: https://learn.microsoft.com/en-us/windows/wsl/install
+- Node.js
 
-Currently, two official plugins are available:
+## Run in Development Mode
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Install Node.js (via nvm)
+Recommended: Node.js **v24.13.0 (LTS)** for Linux using **nvm** with **npm**.
 
-## React Compiler
+```bash
+# Download and install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Load nvm (instead of restarting the shell)
+. "$HOME/.nvm/nvm.sh"
 
-## Expanding the ESLint configuration
+# Install Node.js 24 (LTS)
+nvm install 24
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Verify versions
+node -v   # should print "v24.13.0"
+npm -v    # should print "11.6.2"
+```
+
+### Clone the repository and navigate to the frontend
+```bash
+git clone git@github.com:stephenolenchak/team5-contacts-app.git
+cd team5-contacts-app/frontend
+```
+
+### Start the dev server
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+Then copy the contents of the `dist/` folder to your web server.
