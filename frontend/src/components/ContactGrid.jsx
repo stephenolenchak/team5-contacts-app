@@ -2,11 +2,13 @@ import Box from '@mui/material/Box'
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import EditContact from './EditContact';
 import ContactSearch from './ContactSearch';
-import { Stack, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import { Stack, Button } from '@mui/material';
 import DeleteContact from './DeleteContact';
+import CreateContact from './CreateContact';
 
 const rows = [
   { id: 1, name: 'Bob', email: 'Bob@example.com' },
@@ -15,6 +17,7 @@ const rows = [
 ];
 
 export const ContactGrid = () => {
+  const [createOpen, setCreateOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -60,7 +63,21 @@ export const ContactGrid = () => {
   return (
     <Box sx={{ height: "80%", width: { xs: '95%', md: '80%' } }}>
       <Stack spacing={2}>
-        <ContactSearch />
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1.5}
+          alignItems={{ xs: "stretch", sm: "center" }}
+        >
+          <ContactSearch />
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() => setCreateOpen(true)}
+            sx={{ whiteSpace: "nowrap" }}
+          >
+            Create Contact
+          </Button>
+        </Stack>
 
         <DataGrid
           rows={rows}
@@ -81,6 +98,11 @@ export const ContactGrid = () => {
           open={editOpen}
           contact={selectedRow}
           onClose={() => setEditOpen(false)}
+        />
+
+        <CreateContact
+          open={createOpen}
+          onClose={() => setCreateOpen(false)}
         />
 
         <DeleteContact
