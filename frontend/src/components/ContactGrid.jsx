@@ -58,7 +58,7 @@ export const ContactGrid = () => {
   ];
 
   return (
-    <Box sx={{ height: "80%", width: '80%' }}>
+    <Box sx={{ height: "80%", width: { xs: '95%', md: '80%' } }}>
       <Stack spacing={2}>
         <ContactSearch />
 
