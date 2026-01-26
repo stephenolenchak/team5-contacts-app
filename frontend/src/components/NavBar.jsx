@@ -14,6 +14,7 @@ export const Navbar = () => {
             Clean Contacts
           </Typography>
           <Box sx={{ flexGrow: 1}}></Box>
+          <Button color="inherit"  component={Link} to="/register">Register</Button>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
