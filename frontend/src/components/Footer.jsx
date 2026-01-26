@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
       }}
     >
       <Typography variant="body2">
-        © {new Date().getFullYear()} Clean Contacts
+        © {new Date().getFullYear()} Clean Contacts - <Link color="inherit" href="https://github.com/stephenolenchak/team5-contacts-app/">GitHub Repository</Link>
       </Typography>
     </Box>
   );
