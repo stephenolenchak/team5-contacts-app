@@ -3,12 +3,13 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid'
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
-import EditContact from './EditContact';
+import { useState, lazy, Suspense } from "react";
 import ContactSearch from './ContactSearch';
 import { Stack, Button } from '@mui/material';
-import DeleteContact from './DeleteContact';
-import CreateContact from './CreateContact';
+
+const EditContact = lazy(() => import("./EditContact"));
+const DeleteContact = lazy(() => import("./DeleteContact"));
+const CreateContact = lazy(() => import("./CreateContact"));
 
 const rows = [
   { id: 1, name: 'Bob', email: 'Bob@example.com' },
@@ -94,23 +95,25 @@ export const ContactGrid = () => {
           }}
         />
 
-        <EditContact
-          open={editOpen}
-          contact={selectedRow}
-          onClose={() => setEditOpen(false)}
-        />
+        <Suspense fallback={null}>
+          <EditContact
+            open={editOpen}
+            contact={selectedRow}
+            onClose={() => setEditOpen(false)}
+          />
 
-        <CreateContact
-          open={createOpen}
-          onClose={() => setCreateOpen(false)}
-        />
+          <CreateContact
+            open={createOpen}
+            onClose={() => setCreateOpen(false)}
+          />
 
-        <DeleteContact
-          open={deleteOpen}
-          contact={selectedRow}
-          onClose={() => setDeleteOpen(false)}
-          onConfirm={handleDelete}
-        />
+          <DeleteContact
+            open={deleteOpen}
+            contact={selectedRow}
+            onClose={() => setDeleteOpen(false)}
+            onConfirm={handleDelete}
+          />
+        </Suspense>
 
       </Stack>
     </Box>
