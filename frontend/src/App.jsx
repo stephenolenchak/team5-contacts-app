@@ -35,7 +35,7 @@ function App() {
         <Navbar />
         <Toolbar />
         <Grow in timeout={400} style={{ transformOrigin: '0 0 0' }}>
-        <Box  sx={{textAlign: 'center', backgroundColor: "#0f243a", width: "95vw", height: "90vh", margin: "0 auto", borderRadius: 10, mt: 4,display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",}}>
+        <Box  sx={{textAlign: 'center', backgroundColor: "#0f243a", width: "95vw", height: "83.7vh", margin: "0 auto", borderRadius: 10, mt: 4,display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",}}>
         <Box sx={{ height: 24 }} />
           <Suspense fallback={loader}>
             <Routes>
