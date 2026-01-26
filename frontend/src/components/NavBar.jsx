@@ -15,7 +15,7 @@ export const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1}}></Box>
           <Button color="inherit"  component={Link} to="/register">Register</Button>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" component={Link} to="/dashboard">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>
