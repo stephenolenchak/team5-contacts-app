@@ -85,6 +85,10 @@ export const ContactGrid = () => {
           columns={columns}
           pageSizeOptions={[10, 30, 50, 100]}
           getRowHeight={() => "auto"}
+          localeText={{
+            noRowsLabel: "No Conacts",
+            paginationRowsPerPage: "Contacts per page:",
+          }}
           sx={{
             "& .MuiDataGrid-cell": {
               whiteSpace: "normal",
