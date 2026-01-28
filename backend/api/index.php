@@ -168,22 +168,49 @@ if ($resource === 'contacts') {
     if ($method === 'GET') {
         $userId = requireAuth();
         $search = trim($_GET['search'] ?? '');
+        $page = max(1, (int)($_GET['page'] ?? 1));
+        $pageSize = max(1, min(100, (int)($_GET['pageSize'] ?? 10))); // limit max pageSize to 100
+        $offset = ($page - 1) * $pageSize;
 
         $pdo = db();
+        
+        // First, get the total count of contacts
         if ($search === '') {
-            $stmt = $pdo->prepare('SELECT * FROM Contacts WHERE userId = ? ORDER BY lastName, firstName');
-            $stmt->execute([$userId]);
+            $countStmt = $pdo->prepare('SELECT COUNT(*) as total FROM Contacts WHERE userId = ?');
+            $countStmt->execute([$userId]);
+        } else {
+            $like = '%' . $search . '%';
+            $countStmt = $pdo->prepare(
+                'SELECT COUNT(*) as total FROM Contacts WHERE userId = ? AND (' .
+                'firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ?' .
+                ')'
+            );
+            $countStmt->execute([$userId, $like, $like, $like, $like]);
+        }
+        $totalContacts = (int)$countStmt->fetch()['total'];
+        
+        // Then, get the paginated contacts
+        if ($search === '') {
+            $stmt = $pdo->prepare('SELECT * FROM Contacts WHERE userId = ? ORDER BY lastName, firstName LIMIT ? OFFSET ?');
+            $stmt->execute([$userId, $pageSize, $offset]);
         } else {
             $like = '%' . $search . '%';
             $stmt = $pdo->prepare(
                 'SELECT * FROM Contacts WHERE userId = ? AND (' .
                 'firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ?' .
-                ') ORDER BY lastName, firstName'
+                ') ORDER BY lastName, firstName LIMIT ? OFFSET ?'
             );
-            $stmt->execute([$userId, $like, $like, $like, $like]); // partial match search
+            $stmt->execute([$userId, $like, $like, $like, $like, $pageSize, $offset]); // partial match search
         }
 
-        respond(200, ['ok' => true, 'contacts' => $stmt->fetchAll()]);
+        respond(200, [
+            'ok' => true,
+            'contacts' => $stmt->fetchAll(),
+            'totalContacts' => $totalContacts,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'totalPages' => (int)ceil($totalContacts / $pageSize)
+        ]);
     }
 
     // handle creating a new contact for a user and return the new contact id
