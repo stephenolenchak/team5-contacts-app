@@ -32,6 +32,6 @@ docker compose up
 ### 3. To reset project
 ```bash
 docker compose down -v
-docker compose up --build -d
 docker volume rm -f $(docker volume ls -q)
+docker compose up --build -d
 ```
