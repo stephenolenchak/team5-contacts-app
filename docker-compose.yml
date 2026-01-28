@@ -12,7 +12,7 @@ services:
       SEED_DB: ${SEED_DB:-false}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./backend/db/init:/docker-entrypoint-initdb.d:ro
+      - ./backend/db:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
 
 volumes:
