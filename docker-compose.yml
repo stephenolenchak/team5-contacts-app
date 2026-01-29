@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   db:
     image: mysql:8.0
@@ -13,6 +11,20 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./backend/db:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+
+  web:
+    image: ghcr.io/stephenolenchak/team5-contacts-app:latest
+    container_name: contacts-web
+    ports:
+      - "80:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASS: ${MYSQL_PASSWORD}
+    depends_on:
+      - db
     restart: unless-stopped
 
 volumes:

@@ -1,10 +1,6 @@
 -- Personal Contact Manager Database Schema
 -- LAMP Stack Project
 
--- Create the database
-CREATE DATABASE IF NOT EXISTS contact_manager;
-USE contact_manager;
-
 -- Users table for authentication
 CREATE TABLE IF NOT EXISTS Users (
     id INT AUTO_INCREMENT PRIMARY KEY,

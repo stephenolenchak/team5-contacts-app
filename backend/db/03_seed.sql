@@ -1,8 +1,6 @@
-﻿USE contact_manager;
-
--- Insert demo user (password should already be hashed in real app)
+﻿-- Insert demo user (password is hash of "testpassword")
 INSERT INTO Users (firstName, lastName, email, password)
-VALUES ('Test', 'User', 'test@example.com', 'testpassword');
+VALUES ('Test', 'User', 'test@example.com', '$2y$10$SYyS754jOjBQSqRsdwm.vebSnIndgGWtZS9AqTKkBm5KGcGuoAh/.');
 
 -- Get that user's id (assumes auto_increment starts at 1)
 SET @userId = LAST_INSERT_ID();
