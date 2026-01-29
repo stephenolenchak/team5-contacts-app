@@ -192,7 +192,10 @@ if ($resource === 'contacts') {
         // Then, get the paginated contacts
         if ($search === '') {
             $stmt = $pdo->prepare('SELECT * FROM Contacts WHERE userId = ? ORDER BY lastName, firstName LIMIT ? OFFSET ?');
-            $stmt->execute([$userId, $pageSize, $offset]);
+            $stmt->bindValue(1, $userId, PDO::PARAM_INT);
+            $stmt->bindValue(2, $pageSize, PDO::PARAM_INT);
+            $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+            $stmt->execute();
         } else {
             $like = '%' . $search . '%';
             $stmt = $pdo->prepare(
@@ -200,7 +203,14 @@ if ($resource === 'contacts') {
                 'firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ?' .
                 ') ORDER BY lastName, firstName LIMIT ? OFFSET ?'
             );
-            $stmt->execute([$userId, $like, $like, $like, $like, $pageSize, $offset]); // partial match search
+            $stmt->bindValue(1, $userId, PDO::PARAM_INT);
+            $stmt->bindValue(2, $like, PDO::PARAM_STR);
+            $stmt->bindValue(3, $like, PDO::PARAM_STR);
+            $stmt->bindValue(4, $like, PDO::PARAM_STR);
+            $stmt->bindValue(5, $like, PDO::PARAM_STR);
+            $stmt->bindValue(6, $pageSize, PDO::PARAM_INT);
+            $stmt->bindValue(7, $offset, PDO::PARAM_INT);
+            $stmt->execute(); // partial match search
         }
 
         respond(200, [
