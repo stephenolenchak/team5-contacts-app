@@ -15,5 +15,19 @@ services:
       - ./backend/db:/docker-entrypoint-initdb.d:ro
     restart: unless-stopped
 
+  web:
+    image: ghcr.io/stephenolenchak/team5-contacts-app:latest
+    container_name: contacts-web
+    ports:
+      - "80:80"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - db
+    restart: unless-stopped
+
 volumes:
   mysql_data:
