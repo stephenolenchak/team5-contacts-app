@@ -1,6 +1,4 @@
-﻿USE contact_manager;
-
--- Insert demo user (password should already be hashed in real app)
+﻿-- Insert demo user (password should already be hashed in real app)
 INSERT INTO Users (firstName, lastName, email, password)
 VALUES ('Test', 'User', 'test@example.com', 'testpassword');
 
