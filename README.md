@@ -2,13 +2,13 @@
 
 Team 5
 
-| Team Members  | Role |
-| ------------- |:-------------:|
-| Hayden Fowler      | PM / Front End     |
-| Stephen Olenchak      | Front End     |
-| Sharath Kukeswaran      | Database     |
-| Lincoln Spencer      | API Developer     |
-| Dylan McIntee      | API Developer     |
+| Team Members  | Role | Github |
+| ------------- |:-------------:| :-------------:|
+| Hayden Fowler      | PM / Front End     | @Hfowler44 |
+| Stephen Olenchak      | Front End     | @stephenolenchak |
+| Sharath Kukeswaran      | Database     | @sharathkukeswaran-spec |
+| Lincoln Spencer      | API Developer     | @sl2005 |
+| Dylan McIntee      | API Developer     | @dylanmc1ntee |
 
 ## How to run Clean Contacts
 
