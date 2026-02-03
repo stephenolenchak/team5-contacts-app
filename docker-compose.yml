@@ -1,5 +1,6 @@
 services:
   db:
+    platform: linux/amd64
     image: mysql:8.0
     container_name: contacts-mysql
     environment:
@@ -14,6 +15,7 @@ services:
     restart: unless-stopped
 
   web:
+    platform: linux/amd64
     image: ghcr.io/stephenolenchak/team5-contacts-app:latest
     container_name: contacts-web
     ports:
