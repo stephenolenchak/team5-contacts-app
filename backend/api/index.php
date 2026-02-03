@@ -40,18 +40,16 @@ function getJsonBody(): array
     return $data;
 }
 
-// get the request path and then normalize it
+// get the request path and then normalize it, strips url if needed
 function getPath(): string
 {
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $scriptDir = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
-    if ($scriptDir !== '' && strpos($path, $scriptDir) === 0) { // normalize path
-        $path = substr($path, strlen($scriptDir));
+
+    if (strpos($path, '/api') === 0) {
+        $path = substr($path, strlen('/api'));
     }
-    if ($path === '') { // more normalization
-        $path = '/';
-    }
-    return $path; // return normalized path
+
+    return $path === '' ? '/' : $path;
 }
 
 // pdo connect to mySQL database
