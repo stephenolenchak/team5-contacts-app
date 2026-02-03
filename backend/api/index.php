@@ -299,28 +299,4 @@ if ($resource === 'contacts' && $method === 'PUT' && $id !== null) {
     respond(200, ['ok' => true]);
 }
 
-// handles deleting a contact on the dashboard
-if ($resource === 'contacts' && $method === 'DELETE' && $id !== null) {
-
-    $userId = requireAuth();
-    $contactId = (int)$id;
-
-    $pdo = db();
-
-    // Ensure the contact belongs to the logged-in user
-    $stmt = $pdo->prepare(
-        'DELETE FROM Contacts
-         WHERE id = ? AND userId = ?'
-    );
-
-    $stmt->execute([$contactId, $userId]);
-
-    // If no rows were affected, contact didn't exist or wasn't owned by user
-    if ($stmt->rowCount() === 0) {
-        respond(404, ['error' => 'Contact not found.']);
-    }
-
-    respond(200, ['ok' => true]);
-}
-
 respond(404, ['error' => 'Not found.']); // no route matches 404 error
