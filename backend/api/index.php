@@ -253,7 +253,74 @@ if ($resource === 'contacts') {
     }
 }
 
-// TODO : handle updating and deleting a contact by id
+// handle updating a contact on the dashboard page
+if ($resource === 'contacts' && $method === 'PUT' && $id !== null) {
 
+    $userId = requireAuth();
+    $contactId = (int)$id;
+    $data = getJsonBody();
+
+    $firstName = trim($data['firstName'] ?? '');
+    $lastName  = trim($data['lastName'] ?? '');
+    $email     = trim($data['email'] ?? '');
+    $phone     = trim($data['phone'] ?? '');
+
+    // Right now editing the contact only gives 3 fields: name, email, and number
+    // Either the edit contact tab needs to add another field, or choose either first or last name for this conditional
+    if ($firstName === '' || $lastName === '' || $email === '' || $phone === '') {
+        respond(400, ['error' => 'Missing required fields.']);
+    }
+
+    $pdo = db();
+
+    // Ensure the contact belongs to the logged-in user
+    $check = $pdo->prepare('SELECT id FROM Contacts WHERE id = ? AND userId = ?');
+    $check->execute([$contactId, $userId]);
+
+    if (!$check->fetch()) {
+        respond(404, ['error' => 'Contact not found.']);
+    }
+
+    $stmt = $pdo->prepare(
+        'UPDATE Contacts
+         SET firstName = ?, lastName = ?, email = ?, phone = ?
+         WHERE id = ? AND userId = ?'
+    );
+
+    $stmt->execute([
+        $firstName,
+        $lastName,
+        $email,
+        $phone,
+        $contactId,
+        $userId
+    ]);
+
+    respond(200, ['ok' => true]);
+}
+
+// handles deleting a contact on the dashboard
+if ($resource === 'contacts' && $method === 'DELETE' && $id !== null) {
+
+    $userId = requireAuth();
+    $contactId = (int)$id;
+
+    $pdo = db();
+
+    // Ensure the contact belongs to the logged-in user
+    $stmt = $pdo->prepare(
+        'DELETE FROM Contacts
+         WHERE id = ? AND userId = ?'
+    );
+
+    $stmt->execute([$contactId, $userId]);
+
+    // If no rows were affected, contact didn't exist or wasn't owned by user
+    if ($stmt->rowCount() === 0) {
+        respond(404, ['error' => 'Contact not found.']);
+    }
+
+    respond(200, ['ok' => true]);
+}
 
 respond(404, ['error' => 'Not found.']); // no route matches 404 error
