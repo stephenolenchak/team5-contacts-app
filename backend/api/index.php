@@ -321,4 +321,10 @@ if ($resource === 'contacts' && $method === 'DELETE' && $id !== null) {
     respond(200, ['ok' => true]);
 }
 
-respond(404, ['error' => 'Not found.']); // no route matches 404 error
+// no route matched with debugs
+respond(404, [
+    'error' => 'Not founds.',
+    'resource' => $resource,
+    'id' => $id
+]);
+
