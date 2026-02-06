@@ -18,6 +18,7 @@ Team 5
 
 ### 1. Create .env file in repo root
 ```env
+DOMAIN=
 MYSQL_ROOT_PASSWORD=
 MYSQL_DATABASE=
 MYSQL_USER=
