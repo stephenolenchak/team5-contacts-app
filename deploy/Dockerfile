@@ -1,13 +1,3 @@
-FROM node:20 AS frontend-build
-WORKDIR /app
-
-COPY frontend/package*.json ./frontend/
-WORKDIR /app/frontend
-RUN npm ci
-
-COPY frontend/ ./
-RUN npm run build
-
 FROM php:8.3-apache
 
 RUN a2enmod rewrite
