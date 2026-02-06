@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Clean Contacts</title>
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">Clean Contacts</div>
+    <div class="nav-links">
+      <a href="register.html">REGISTER</a>
+      <a href="login.html">LOGIN</a>
+    </div>
+  </nav>
+
+  <main class="main-wrap">
+    <section class="panel">
+      <div class="dash-wrap">
+
+        <h1 class="dash-title">Dashboard</h1>
+
+        <div class="toolbar">
+          <div class="search-area">
+            <label class="search-label" for="search">Search contacts</label>
+            <div class="search-input">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <input id="search" type="text" placeholder="Name, email, phone..." />
+            </div>
+          </div>
+
+          <a class="create-btn" href="#">
+            <span class="plus">＋</span>
+            CREATE CONTACT
+          </a>
+        </div>
+
+        <div class="table-card">
+          <table class="contacts-table">
+            <thead>
+              <tr>
+                <th class="col-id">ID</th>
+                <th class="col-name">Name</th>
+                <th class="col-email">Email</th>
+                <th class="col-phone">Phone</th>
+                <th class="col-actions">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Bob</td>
+                <td>Bob@example.com</td>
+                <td></td>
+                <td class="actions">
+                  <button class="icon-btn" title="Edit" aria-label="Edit">✎</button>
+                  <button class="icon-btn" title="Delete" aria-label="Delete">🗑</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>2</td>
+                <td>Bill</td>
+                <td>Bill@example.com</td>
+                <td></td>
+                <td class="actions">
+                  <button class="icon-btn" title="Edit" aria-label="Edit">✎</button>
+                  <button class="icon-btn" title="Delete" aria-label="Delete">🗑</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>3</td>
+                <td>Dan</td>
+                <td>Dan@example.com</td>
+                <td></td>
+                <td class="actions">
+                  <button class="icon-btn" title="Edit" aria-label="Edit">✎</button>
+                  <button class="icon-btn" title="Delete" aria-label="Delete">🗑</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="table-footer">
+            <div class="footer-left">
+              Contacts per page:&nbsp;
+              <span class="page-size">100</span>
+            </div>
+
+            <div class="footer-mid">1–3 of 3</div>
+
+            <div class="footer-right">
+              <button class="pager" aria-label="Previous page" title="Previous">‹</button>
+              <button class="pager" aria-label="Next page" title="Next">›</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Clean Contacts · <a href="#">GitHub Repository</a>
+  </footer>
+
+</body>
+</html>

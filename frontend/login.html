@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clean Contacts</title>
+  <title>Login - Clean Contacts</title>
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
 
@@ -23,11 +23,14 @@
 
   <main class="main-wrap">
     <section class="panel">
-      <div class="home-content">
-        <h1>Welcome to Clean Contacts!</h1>
-        <div class="home-icon">📖</div>
-        <p>Join our users!</p>
-        <a class="home-btn" href="register.html">SIGN UP FOR FREE!</a>
+      <div class="login-wrap">
+        <h1>Login</h1>
+
+        <form class="auth-form" action="#" method="post">
+          <input type="email" name="email" placeholder="Email" autocomplete="email" />
+          <input type="password" name="password" placeholder="Password" autocomplete="current-password" />
+          <button class="login-btn" type="submit">LOGIN</button>
+        </form>
       </div>
     </section>
   </main>
