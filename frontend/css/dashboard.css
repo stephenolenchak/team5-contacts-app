@@ -1,0 +1,185 @@
+.dash-wrap {
+  width: 100%;
+  max-width: 1320px;
+  color: #fff;
+}
+
+/* Title */
+.dash-title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 500;
+  margin-bottom: 26px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 auto 12px auto;
+  width: 92%;
+}
+
+.search-area {
+  flex: 1;
+}
+
+.search-label {
+  display: block;
+  font-size: 10px;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.search-input {
+  position: relative;
+  width: 100%;
+}
+
+.search-input input {
+  width: 100%;
+  height: 34px;
+  padding: 8px 12px 8px 34px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 34, 56, 0.55);
+  color: #e9f3ff;
+  outline: none;
+  font-size: 12px;
+}
+
+.search-input input::placeholder {
+  color: rgba(233, 243, 255, 0.55);
+}
+
+.search-input input:focus {
+  border-color: rgba(159, 211, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(159, 211, 255, 0.12);
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.85;
+  font-size: 12px;
+}
+
+/* Create button */
+.create-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 3px;
+  background: #9fd3ff;
+  color: #0a2540;
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+
+.create-btn:hover {
+  background: #b6e1ff;
+}
+
+.plus {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Table container */
+.table-card {
+  width: 92%;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Table */
+.contacts-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.contacts-table thead th {
+  text-align: left;
+  padding: 10px 10px;
+  background: rgba(0, 0, 0, 0.35);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.contacts-table tbody td {
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.contacts-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.col-id { width: 60px; }
+.col-actions { width: 120px; text-align: right; }
+.contacts-table td.actions { text-align: right; }
+
+/* Action icons */
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 2px 4px;
+}
+
+.icon-btn:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Footer/pagination bar */
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 8px 10px;
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.30);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer-left {
+  margin-right: auto;
+  padding-left: 6px;
+}
+
+.page-size {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.pager {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 6px;
+}
+
+.pager:hover {
+  color: #fff;
+}

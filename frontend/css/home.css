@@ -29,6 +29,8 @@
   color: #0a2540;
   cursor: pointer;
   font-weight: 700;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .home-btn:hover {
