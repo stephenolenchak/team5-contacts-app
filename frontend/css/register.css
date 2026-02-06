@@ -1,0 +1,55 @@
+.register-wrap {
+  width: 420px;
+  text-align: center;
+  color: #fff;
+}
+
+.register-wrap h1 {
+  font-size: 44px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.auth-form input {
+  width: 100%;
+  height: 36px;
+  padding: 10px 12px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 34, 56, 0.55);
+  color: #e9f3ff;
+  outline: none;
+  font-size: 12px;
+}
+
+.auth-form input::placeholder {
+  color: rgba(233, 243, 255, 0.55);
+}
+
+.auth-form input:focus {
+  border-color: rgba(159, 211, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(159, 211, 255, 0.12);
+}
+
+.register-btn {
+  height: 32px;
+  border: none;
+  border-radius: 3px;
+  background: #9fd3ff;  /* BLUE */
+  color: #0a2540;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+}
+
+.register-btn:hover {
+  background: #b6e1ff;
+}
