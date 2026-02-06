@@ -16,7 +16,8 @@ services:
 
   web:
     platform: linux/amd64
-    image: ghcr.io/stephenolenchak/team5-contacts-app:latest
+    build:
+      dockerfile: ./deploy/Dockerfile
     container_name: contacts-web
     ports:
       - "80:80"
