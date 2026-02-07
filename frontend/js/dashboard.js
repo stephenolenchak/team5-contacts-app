@@ -90,7 +90,6 @@ const renderRows = (contacts) => {
     row.dataset.zipCode = contact.zipCode || '';
     row.dataset.notes = contact.notes || '';
     row.innerHTML = `
-      <td>${contact.id}</td>
       <td>${contact.firstName || ''}</td>
       <td>${contact.lastName || ''}</td>
       <td>${contact.email}</td>
