@@ -1,0 +1,334 @@
+const pageSize = 20;
+const tableBody = document.querySelector('#contacts-body');
+const searchInput = document.querySelector('#search');
+const pageRange = document.querySelector('#page-range');
+const statusBar = document.querySelector('#status-bar');
+const prevPageBtn = document.querySelector('#prev-page');
+const nextPageBtn = document.querySelector('#next-page');
+const createBtn = document.querySelector('#create-contact');
+const modal = document.querySelector('#contact-modal');
+const modalTitle = document.querySelector('#modal-title');
+const contactForm = document.querySelector('#contact-form');
+const cancelModalBtn = document.querySelector('#cancel-modal');
+const deleteModal = document.querySelector('#delete-modal');
+const cancelDeleteBtn = document.querySelector('#cancel-delete');
+const confirmDeleteBtn = document.querySelector('#confirm-delete');
+const logoutBtn = document.querySelector('#logout-btn');
+
+let currentPage = 1;
+let totalPages = 1;
+let currentSearch = '';
+let editingContactId = null;
+let deleteContactId = null;
+
+const setStatus = (message, isError = false) => {
+  statusBar.textContent = message;
+  statusBar.classList.toggle('error', isError);
+};
+
+const renderNotFound = () => {
+  document.title = '404 - Not Found';
+  document.body.innerHTML = `
+    <main style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b263f;color:#fff;text-align:center;padding:24px;">
+      <div>
+        <h1 style="font-size:48px;margin-bottom:12px;">404</h1>
+        <p style="font-size:16px;opacity:0.85;">Page not found.</p>
+        <a href="index.html" style="display:inline-block;margin-top:18px;padding:8px 14px;border-radius:4px;background:#9fd3ff;color:#0a2540;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:0.6px;">RETURN TO HOME</a>
+      </div>
+    </main>
+  `;
+};
+
+const apiFetch = async (path, options = {}) => {
+  const response = await fetch(path, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options.headers || {}),
+    },
+    credentials: 'include',
+  });
+
+  if (response.status === 401 || response.status === 403) {
+    renderNotFound();
+    return null;
+  }
+
+  return response;
+};
+
+const readError = async (response, fallback) => {
+  try {
+    const data = await response.json();
+    return data.error || fallback;
+  } catch (error) {
+    const message = await response.text();
+    return message || fallback;
+  }
+};
+
+const renderRows = (contacts) => {
+  tableBody.innerHTML = '';
+
+  if (!contacts.length) {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td colspan="11" class="empty-row">No contacts found.</td>';
+    tableBody.appendChild(row);
+    return;
+  }
+
+  contacts.forEach((contact) => {
+    const row = document.createElement('tr');
+    row.dataset.firstName = contact.firstName || '';
+    row.dataset.lastName = contact.lastName || '';
+    row.dataset.email = contact.email || '';
+    row.dataset.phone = contact.phone || '';
+    row.dataset.address = contact.address || '';
+    row.dataset.city = contact.city || '';
+    row.dataset.state = contact.state || '';
+    row.dataset.zipCode = contact.zipCode || '';
+    row.dataset.notes = contact.notes || '';
+    row.innerHTML = `
+      <td>${contact.id}</td>
+      <td>${contact.firstName || ''}</td>
+      <td>${contact.lastName || ''}</td>
+      <td>${contact.email}</td>
+      <td>${contact.phone}</td>
+      <td>${contact.address || ''}</td>
+      <td>${contact.city || ''}</td>
+      <td>${contact.state || ''}</td>
+      <td>${contact.zipCode || ''}</td>
+      <td>${contact.notes || ''}</td>
+      <td class="actions">
+        <button class="icon-btn" data-action="edit" data-id="${contact.id}" title="Edit" aria-label="Edit">✎</button>
+        <button class="icon-btn" data-action="delete" data-id="${contact.id}" title="Delete" aria-label="Delete">🗑</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
+  });
+};
+
+const updateFooter = (totalContacts) => {
+  const start = totalContacts === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const end = Math.min(currentPage * pageSize, totalContacts);
+  pageRange.textContent = `${start}–${end} of ${totalContacts}`;
+  prevPageBtn.disabled = currentPage <= 1;
+  nextPageBtn.disabled = currentPage >= totalPages;
+};
+
+const loadContacts = async () => {
+  setStatus('');
+  const params = new URLSearchParams({
+    search: currentSearch,
+    page: String(currentPage),
+    pageSize: String(pageSize),
+  });
+
+  const response = await apiFetch(`/api/contacts?${params.toString()}`);
+  if (!response) {
+    return;
+  }
+
+  if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      renderNotFound();
+      return;
+    }
+    const message = await readError(response, 'Failed to load contacts.');
+    setStatus(message, true);
+    return;
+  }
+
+  const contentType = response.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) {
+    renderNotFound();
+    return;
+  }
+
+  const data = await response.json();
+  renderRows(data.contacts || []);
+  totalPages = data.totalPages || 1;
+  updateFooter(data.totalContacts || 0);
+};
+
+const openModal = (mode, contact = {}) => {
+  editingContactId = mode === 'edit' ? contact.id : null;
+  modalTitle.textContent = mode === 'edit' ? 'Edit Contact' : 'Create Contact';
+  contactForm.firstName.value = contact.firstName || '';
+  contactForm.lastName.value = contact.lastName || '';
+  contactForm.email.value = contact.email || '';
+  contactForm.phone.value = contact.phone || '';
+  contactForm.address.value = contact.address || '';
+  contactForm.city.value = contact.city || '';
+  contactForm.state.value = contact.state || '';
+  contactForm.zipCode.value = contact.zipCode || '';
+  contactForm.notes.value = contact.notes || '';
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+};
+
+const closeModal = () => {
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  contactForm.reset();
+  editingContactId = null;
+};
+
+const handleSave = async (event) => {
+  event.preventDefault();
+
+  const payload = {
+    firstName: contactForm.firstName.value.trim(),
+    lastName: contactForm.lastName.value.trim(),
+    email: contactForm.email.value.trim(),
+    phone: contactForm.phone.value.trim(),
+    address: contactForm.address.value.trim(),
+    city: contactForm.city.value.trim(),
+    state: contactForm.state.value.trim(),
+    zipCode: contactForm.zipCode.value.trim(),
+    notes: contactForm.notes.value.trim(),
+  };
+
+  const isEditing = Boolean(editingContactId);
+  const endpoint = isEditing
+    ? `/api/contacts/${editingContactId}`
+    : '/api/contacts';
+  const method = isEditing ? 'PUT' : 'POST';
+
+  const response = await apiFetch(endpoint, {
+    method,
+    body: JSON.stringify(payload),
+  });
+
+  if (!response) {
+    return;
+  }
+
+  if (!response.ok) {
+    const message = await readError(response, 'Save failed.');
+    setStatus(message, true);
+    return;
+  }
+
+  closeModal();
+  await loadContacts();
+};
+
+const handleDelete = async (contactId) => {
+  const response = await apiFetch(`/api/contacts/${contactId}`, {
+    method: 'DELETE',
+  });
+
+  if (!response) {
+    return;
+  }
+
+  if (!response.ok) {
+    const message = await readError(response, 'Delete failed.');
+    setStatus(message, true);
+    return;
+  }
+
+  await loadContacts();
+};
+
+const openDeleteModal = (contactId, name) => {
+  deleteContactId = contactId;
+  const text = deleteModal.querySelector('.modal-text');
+  text.textContent = name
+    ? `Are you sure you want to delete ${name}?`
+    : 'Are you sure you want to delete this contact?';
+  deleteModal.classList.add('open');
+  deleteModal.setAttribute('aria-hidden', 'false');
+};
+
+const closeDeleteModal = () => {
+  deleteContactId = null;
+  deleteModal.classList.remove('open');
+  deleteModal.setAttribute('aria-hidden', 'true');
+};
+
+let searchTimer;
+searchInput.addEventListener('input', (event) => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    currentSearch = event.target.value.trim();
+    currentPage = 1;
+    loadContacts();
+  }, 300);
+});
+
+prevPageBtn.addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage -= 1;
+    loadContacts();
+  }
+});
+
+nextPageBtn.addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage += 1;
+    loadContacts();
+  }
+});
+
+createBtn.addEventListener('click', () => openModal('create'));
+cancelModalBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+deleteModal.addEventListener('click', (event) => {
+  if (event.target === deleteModal) {
+    closeDeleteModal();
+  }
+});
+confirmDeleteBtn.addEventListener('click', async () => {
+  if (deleteContactId) {
+    await handleDelete(deleteContactId);
+  }
+  closeDeleteModal();
+});
+
+contactForm.addEventListener('submit', handleSave);
+
+tableBody.addEventListener('click', async (event) => {
+  const button = event.target.closest('button[data-action]');
+  if (!button) {
+    return;
+  }
+
+  const action = button.dataset.action;
+  const contactId = button.dataset.id;
+
+  if (action === 'delete') {
+    const row = button.closest('tr');
+    const name = `${row.dataset.firstName || ''} ${row.dataset.lastName || ''}`.trim();
+    openDeleteModal(contactId, name);
+    return;
+  }
+
+  const row = button.closest('tr');
+  openModal('edit', {
+    id: contactId,
+    firstName: row.dataset.firstName || '',
+    lastName: row.dataset.lastName || '',
+    email: row.dataset.email || '',
+    phone: row.dataset.phone || '',
+    address: row.dataset.address || '',
+    city: row.dataset.city || '',
+    state: row.dataset.state || '',
+    zipCode: row.dataset.zipCode || '',
+    notes: row.dataset.notes || '',
+  });
+});
+
+document.querySelector('#page-size').textContent = pageSize;
+loadContacts();
+
+logoutBtn.addEventListener('click', async () => {
+  await apiFetch('/api/logout', { method: 'POST' });
+  window.location.href = 'login.html';
+});

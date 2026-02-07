@@ -26,21 +26,33 @@
       <div class="register-wrap">
         <h1>Create Your Account</h1>
 
-        <form class="auth-form" action="#" method="post">
-          <input type="text" placeholder="First Name" />
-          <input type="text" placeholder="Last Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <input type="password" placeholder="Confirm Password" />
+        <form class="auth-form" id="register-form" action="#" method="post">
+          <input type="text" name="firstName" placeholder="First Name" autocomplete="given-name" required />
+          <input type="text" name="lastName" placeholder="Last Name" autocomplete="family-name" required />
+          <input type="email" name="email" placeholder="Email" autocomplete="email" required />
+          <input type="password" name="password" placeholder="Password" autocomplete="new-password" required />
+          <input type="password" name="confirmPassword" placeholder="Confirm Password" autocomplete="new-password" required />
           <button class="register-btn" type="submit">CREATE ACCOUNT</button>
         </form>
       </div>
     </section>
   </main>
 
+  <div class="modal" id="register-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="register-modal-title">
+      <h2 id="register-modal-title">Check Your Password</h2>
+      <p class="modal-text" id="register-modal-text">Passwords do not match.</p>
+      <div class="modal-actions">
+        <button class="primary-btn" type="button" id="register-modal-close">OK</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
-    © 2026 Clean Contacts · <a href="#">GitHub Repository</a>
+    © 2026 Clean Contacts · <a href="https://github.com/stephenolenchak/team5-contacts-app">GitHub Repository</a>
   </footer>
+
+  <script src="js/register.js"></script>
 
 </body>
 </html>

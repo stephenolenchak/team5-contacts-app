@@ -53,3 +53,61 @@
 .register-btn:hover {
   background: #b6e1ff;
 }
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 12, 20, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: #0f2c47;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  text-align: left;
+}
+
+.modal-card h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.modal-text {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.primary-btn {
+  background: #9fd3ff;
+  color: #0a2540;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background: #b6e1ff;
+}
