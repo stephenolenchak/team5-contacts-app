@@ -36,3 +36,14 @@ docker compose down -v
 docker volume rm -f $(docker volume ls -q) # USE WITH CAUTION! Deletes databse volume
 docker compose up --build -d
 ```
+## AI Assistance Disclosure
+This project was developed with assistance from generative AI tools:
+- **Tools**: Chat GPT 5.2, accessed via chatgpt.com
+- **Dates**: Februrary 6, 2026
+- **Scope**: Frontend (HTML, CSS, JavaScript), Docker. 
+- **Use 1**: We provided the AI with a mockup of the intended user interface of the dashboard for the frontend. Based on this, AI generated initial HTML, CSS, and JavaScript code to help create the table and implement the contacts search, edit, and delete functionality. Additionally, AI provided the JavaScript code to implement the API endpoints for the login and register pages.
+- **Use 2**: AI provided use with docker file and docker compose examples that we adapted to simplify the deployment of the application. 
+
+All AI-generated code was reviewed, tested, and modified to meet
+assignment requirements. Final implementation reflects my understanding
+of the concepts.
