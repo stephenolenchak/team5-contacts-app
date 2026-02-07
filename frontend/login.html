@@ -26,9 +26,11 @@
       <div class="login-wrap">
         <h1>Login</h1>
 
-        <form class="auth-form" action="#" method="post">
-          <input type="email" name="email" placeholder="Email" autocomplete="email" />
-          <input type="password" name="password" placeholder="Password" autocomplete="current-password" />
+        <p class="form-error" id="login-error" role="alert" aria-live="polite"></p>
+
+        <form class="auth-form" id="login-form" action="#" method="post">
+          <input type="email" name="email" placeholder="Email" autocomplete="email" required />
+          <input type="password" name="password" placeholder="Password" autocomplete="current-password" required />
           <button class="login-btn" type="submit">LOGIN</button>
         </form>
       </div>
@@ -36,8 +38,10 @@
   </main>
 
   <footer>
-    © 2026 Clean Contacts · <a href="#">GitHub Repository</a>
+    © 2026 Clean Contacts · <a href="https://github.com/stephenolenchak/team5-contacts-app">GitHub Repository</a>
   </footer>
+
+  <script src="js/login.js"></script>
 
 </body>
 </html>

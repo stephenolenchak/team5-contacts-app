@@ -1,0 +1,89 @@
+const registerForm = document.querySelector('#register-form');
+const registerModal = document.querySelector('#register-modal');
+const registerModalText = document.querySelector('#register-modal-text');
+const registerModalClose = document.querySelector('#register-modal-close');
+
+const openRegisterModal = (message) => {
+  registerModalText.textContent = message;
+  registerModal.classList.add('open');
+  registerModal.setAttribute('aria-hidden', 'false');
+};
+
+const closeRegisterModal = () => {
+  registerModal.classList.remove('open');
+  registerModal.setAttribute('aria-hidden', 'true');
+};
+
+registerModalClose.addEventListener('click', closeRegisterModal);
+registerModal.addEventListener('click', (event) => {
+  if (event.target === registerModal) {
+    closeRegisterModal();
+  }
+});
+
+const readError = async (response, fallback) => {
+  try {
+    const data = await response.json();
+    return data.error || fallback;
+  } catch (error) {
+    try {
+      const message = await response.text();
+      return message || fallback;
+    } catch (readError) {
+      return fallback;
+    }
+  }
+};
+
+const readJson = async (response) => {
+  const contentType = response.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) {
+    return null;
+  }
+  return response.json();
+};
+
+registerForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const firstName = registerForm.firstName.value.trim();
+  const lastName = registerForm.lastName.value.trim();
+  const email = registerForm.email.value.trim();
+  const password = registerForm.password.value;
+  const confirmPassword = registerForm.confirmPassword.value;
+
+  if (password !== confirmPassword) {
+    openRegisterModal('Passwords do not match.');
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+      }),
+    });
+
+    if (!response.ok) {
+      const message = await readError(response, 'Registration failed.');
+      throw new Error(message);
+    }
+
+    const data = await readJson(response);
+    if (data && data.ok === false) {
+      throw new Error(data.error || 'Registration failed.');
+    }
+
+    window.location.href = 'login.html';
+  } catch (error) {
+    alert(error.message || 'Registration failed.');
+  }
+});

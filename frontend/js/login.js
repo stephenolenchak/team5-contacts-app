@@ -1,0 +1,60 @@
+const loginForm = document.querySelector('#login-form');
+const loginError = document.querySelector('#login-error');
+
+const readError = async (response, fallback) => {
+  if (response.status === 401) {
+    return 'Incorrect credentials.';
+  }
+  try {
+    const data = await response.json();
+    return data.error || fallback;
+  } catch (error) {
+    try {
+      const message = await response.text();
+      return message || fallback;
+    } catch (readError) {
+      return fallback;
+    }
+  }
+};
+
+const readJson = async (response) => {
+  const contentType = response.headers.get('Content-Type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error('Unexpected response from server.');
+  }
+  return response.json();
+};
+
+loginForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const email = loginForm.email.value.trim();
+  const password = loginForm.password.value;
+
+  try {
+    loginError.textContent = '';
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const message = await readError(response, 'Login failed.');
+      throw new Error(message);
+    }
+
+    const data = await readJson(response);
+    if (!data.ok) {
+      throw new Error(data.error || 'Login failed.');
+    }
+
+    window.location.href = 'dashboard.html';
+  } catch (error) {
+    loginError.textContent = error.message || 'Login failed.';
+  }
+});

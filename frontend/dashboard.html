@@ -16,8 +16,7 @@
   </div>
 
   <div class="nav-links">
-    <a href="register.html">REGISTER</a>
-    <a href="login.html">LOGIN</a>
+    <button class="nav-btn" id="logout-btn" type="button">LOGOUT</button>
   </div>
 </nav>
 
@@ -36,71 +35,46 @@
             </div>
           </div>
 
-          <a class="create-btn" href="#">
+          <button class="create-btn" id="create-contact" type="button">
             <span class="plus">＋</span>
             CREATE CONTACT
-          </a>
+          </button>
         </div>
+
+        <div class="status-bar" id="status-bar" role="status" aria-live="polite"></div>
 
         <div class="table-card">
           <table class="contacts-table">
             <thead>
               <tr>
                 <th class="col-id">ID</th>
-                <th class="col-name">Name</th>
+                <th class="col-first">First</th>
+                <th class="col-last">Last</th>
                 <th class="col-email">Email</th>
                 <th class="col-phone">Phone</th>
+                <th class="col-address">Address</th>
+                <th class="col-city">City</th>
+                <th class="col-state">State</th>
+                <th class="col-zip">Zip</th>
+                <th class="col-notes">Notes</th>
                 <th class="col-actions">Actions</th>
               </tr>
             </thead>
 
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Bob</td>
-                <td>Bob@example.com</td>
-                <td></td>
-                <td class="actions">
-                  <button class="icon-btn" title="Edit" aria-label="Edit">✎</button>
-                  <button class="icon-btn" title="Delete" aria-label="Delete">🗑</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>2</td>
-                <td>Bill</td>
-                <td>Bill@example.com</td>
-                <td></td>
-                <td class="actions">
-                  <button class="icon-btn" title="Edit" aria-label="Edit">✎</button>
-                  <button class="icon-btn" title="Delete" aria-label="Delete">🗑</button>
-                </td>
-              </tr>
-
-              <tr>
-                <td>3</td>
-                <td>Dan</td>
-                <td>Dan@example.com</td>
-                <td></td>
-                <td class="actions">
-                  <button class="icon-btn" title="Edit" aria-label="Edit">✎</button>
-                  <button class="icon-btn" title="Delete" aria-label="Delete">🗑</button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="contacts-body"></tbody>
           </table>
 
           <div class="table-footer">
             <div class="footer-left">
               Contacts per page:&nbsp;
-              <span class="page-size">100</span>
+              <span class="page-size" id="page-size">20</span>
             </div>
 
-            <div class="footer-mid">1–3 of 3</div>
+            <div class="footer-mid" id="page-range">0–0 of 0</div>
 
             <div class="footer-right">
-              <button class="pager" aria-label="Previous page" title="Previous">‹</button>
-              <button class="pager" aria-label="Next page" title="Next">›</button>
+              <button class="pager" id="prev-page" aria-label="Previous page" title="Previous">‹</button>
+              <button class="pager" id="next-page" aria-label="Next page" title="Next">›</button>
             </div>
           </div>
         </div>
@@ -109,9 +83,80 @@
     </section>
   </main>
 
+  <div class="modal" id="contact-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h2 id="modal-title">Create Contact</h2>
+
+      <form id="contact-form">
+        <div class="form-row">
+          <label for="first-name">First Name</label>
+          <input id="first-name" name="firstName" type="text" autocomplete="given-name" required />
+        </div>
+
+        <div class="form-row">
+          <label for="last-name">Last Name</label>
+          <input id="last-name" name="lastName" type="text" autocomplete="family-name" required />
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <div class="form-row">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+        </div>
+
+        <div class="form-row">
+          <label for="address">Address</label>
+          <input id="address" name="address" type="text" autocomplete="street-address" />
+        </div>
+
+        <div class="form-row">
+          <label for="city">City</label>
+          <input id="city" name="city" type="text" autocomplete="address-level2" />
+        </div>
+
+        <div class="form-row">
+          <label for="state">State</label>
+          <input id="state" name="state" type="text" autocomplete="address-level1" />
+        </div>
+
+        <div class="form-row">
+          <label for="zip">Zip Code</label>
+          <input id="zip" name="zipCode" type="text" autocomplete="postal-code" />
+        </div>
+
+        <div class="form-row">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" rows="3"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button class="ghost-btn" type="button" id="cancel-modal">Cancel</button>
+          <button class="primary-btn" type="submit" id="save-contact">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="delete-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-title">
+      <h2 id="delete-title">Delete Contact</h2>
+      <p class="modal-text">Are you sure you want to delete this contact?</p>
+      <div class="modal-actions">
+        <button class="ghost-btn" type="button" id="cancel-delete">Cancel</button>
+        <button class="danger-btn" type="button" id="confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
-    © 2026 Clean Contacts · <a href="#">GitHub Repository</a>
+    © 2026 Clean Contacts · <a href="https://github.com/stephenolenchak/team5-contacts-app">GitHub Repository</a>
   </footer>
+
+  <script src="js/dashboard.js"></script>
 
 </body>
 </html>

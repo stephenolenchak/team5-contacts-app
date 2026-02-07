@@ -54,6 +54,21 @@ body {
   color: #fff;
 }
 
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #d9d9d9;
+  font-size: 12px;
+  margin-left: 18px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  color: #fff;
+}
+
 /* Center wrapper */
 .main-wrap {
   flex: 1;
@@ -67,7 +82,7 @@ body {
 .panel {
   width: 100%;
   max-width: 1400px;
-  height: 560px;
+  min-height: 560px;
   background: linear-gradient(180deg, #0f2c47, #0a1f34);
   border-radius: 26px;
   box-shadow: 0 14px 45px rgba(0, 0, 0, 0.35);
