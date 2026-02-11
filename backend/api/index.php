@@ -262,6 +262,11 @@ if ($resource === 'contacts' && $method === 'PUT' && $id !== null) {
     $lastName  = trim($data['lastName'] ?? '');
     $email     = trim($data['email'] ?? '');
     $phone     = trim($data['phone'] ?? '');
+    $address   = trim($data['address'] ?? '');
+    $city      = trim($data['city'] ?? '');
+    $state     = trim($data['state'] ?? '');
+    $zipCode   = trim($data['zipCode'] ?? '');
+    $notes     = trim($data['notes'] ?? '');
 
     // Right now editing the contact only gives 3 fields: name, email, and number
     // Either the edit contact tab needs to add another field, or choose either first or last name for this conditional
@@ -281,7 +286,7 @@ if ($resource === 'contacts' && $method === 'PUT' && $id !== null) {
 
     $stmt = $pdo->prepare(
         'UPDATE Contacts
-         SET firstName = ?, lastName = ?, email = ?, phone = ?
+         SET firstName = ?, lastName = ?, email = ?, phone = ?, address = ?, city = ?, state = ?, zipCode = ?, notes = ?
          WHERE id = ? AND userId = ?'
     );
 
@@ -290,6 +295,11 @@ if ($resource === 'contacts' && $method === 'PUT' && $id !== null) {
         $lastName,
         $email,
         $phone,
+        $address,
+        $city,
+        $state,
+        $zipCode,
+        $notes,
         $contactId,
         $userId
     ]);
@@ -327,4 +337,3 @@ respond(404, [
     'resource' => $resource,
     'id' => $id
 ]);
-
