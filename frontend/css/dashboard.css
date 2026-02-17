@@ -161,7 +161,7 @@
 .col-zip { width: 90px; }
 .col-notes { width: 220px; }
 .col-actions { width: 120px; text-align: right; }
-.contacts-table td.actions { text-align: right; }
+.contacts-table td.actions { text-align: left; }
 
 /* Action icons */
 .icon-btn {
