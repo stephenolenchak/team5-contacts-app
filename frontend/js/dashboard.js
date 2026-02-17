@@ -101,8 +101,8 @@ const renderRows = (contacts) => {
       <td>${contact.zipCode || ''}</td>
       <td>${contact.notes || ''}</td>
       <td class="actions">
-        <button class="icon-btn" data-action="edit" data-id="${contact.id}" title="Edit" aria-label="Edit">✎</button>
-        <button class="icon-btn" data-action="delete" data-id="${contact.id}" title="Delete" aria-label="Delete">🗑</button>
+        <button class="icon-btn" data-action="edit" data-id="${contact.id}" title="Edit" aria-label="Edit">✎ Edit </button>
+        <button class="icon-btn" data-action="delete" data-id="${contact.id}" title="Delete" aria-label="Delete">🗑 Delete </button>
       </td>
     `;
     tableBody.appendChild(row);
