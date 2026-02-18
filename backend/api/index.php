@@ -239,7 +239,10 @@ if ($resource === 'contacts') {
         $state = trim($data['state'] ?? '');
         $zipCode = trim($data['zipCode'] ?? '');
         $notes = trim($data['notes'] ?? '');
-
+        if(strlen($firstName) > 50 || strlen($lastName) > 50 || strlen($email) > 100 || strlen($phone) > 20 || strlen($address) > 255 || strlen($city) > 50 || strlen($state) > 50 ||
+         strlen($zipCode) > 10) {
+            respond(400, ['error' => 'A field is too long.']);
+        }
         $pdo = db();
         $stmt = $pdo->prepare(
             'INSERT INTO Contacts (userId, firstName, lastName, email, phone, address, city, state, zipCode, notes) ' .
@@ -273,7 +276,10 @@ if ($resource === 'contacts' && $method === 'PUT' && $id !== null) {
     if ($firstName === '' || $lastName === '' || $email === '' || $phone === '') {
         respond(400, ['error' => 'Missing required fields.']);
     }
-
+    if(strlen($firstName) > 50 || strlen($lastName) > 50 || strlen($email) > 100 || strlen($phone) > 20 || strlen($address) > 255 || strlen($city) > 50 || strlen($state) > 50 ||
+    strlen($zipCode) > 10) {
+        respond(400, ['error' => 'A field entry is too long.']);
+    }
     $pdo = db();
 
     // Ensure the contact belongs to the logged-in user
