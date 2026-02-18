@@ -78,7 +78,7 @@ const renderRows = (contacts) => {
     return;
   }
 
-  contacts.forEach((contact) => {
+  contacts.forEach((contact, index) => {
     const row = document.createElement('tr');
     row.dataset.firstName = contact.firstName || '';
     row.dataset.lastName = contact.lastName || '';
@@ -90,7 +90,7 @@ const renderRows = (contacts) => {
     row.dataset.zipCode = contact.zipCode || '';
     row.dataset.notes = contact.notes || '';
     row.innerHTML = `
-      <td>${contact.id}</td>
+      <td>${index + 1}</td>
       <td>${contact.firstName || ''}</td>
       <td>${contact.lastName || ''}</td>
       <td>${contact.email}</td>
