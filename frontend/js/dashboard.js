@@ -6,6 +6,8 @@ const pageRange = document.querySelector('#page-range');
 const statusBar = document.querySelector('#status-bar');
 const prevPageBtn = document.querySelector('#prev-page');
 const nextPageBtn = document.querySelector('#next-page');
+const sortBySelect = document.querySelector('#sort-by');
+const sortDirectionBtn = document.querySelector('#sort-direction');
 const createBtn = document.querySelector('#create-contact');
 const modal = document.querySelector('#contact-modal');
 const modalTitle = document.querySelector('#modal-title');
@@ -19,6 +21,8 @@ const logoutBtn = document.querySelector('#logout-btn');
 let currentPage = 1;
 let totalPages = 1;
 let currentSearch = '';
+let currentSortBy = 'lastName';
+let currentSortDir = 'asc';
 let editingContactId = null;
 let deleteContactId = null;
 
@@ -66,6 +70,13 @@ const readError = async (response, fallback) => {
     const message = await response.text();
     return message || fallback;
   }
+};
+
+const updateSortDirectionButton = () => {
+  const isAsc = currentSortDir === 'asc';
+  sortDirectionBtn.textContent = isAsc ? '↑' : '↓';
+  sortDirectionBtn.setAttribute('aria-label', isAsc ? 'Sort ascending' : 'Sort descending');
+  sortDirectionBtn.setAttribute('title', isAsc ? 'Ascending' : 'Descending');
 };
 
 const renderRows = (contacts) => {
@@ -123,6 +134,8 @@ const loadContacts = async () => {
     search: currentSearch,
     page: String(currentPage),
     pageSize: String(pageSize),
+    sortBy: currentSortBy,
+    sortDir: currentSortDir,
   });
 
   const response = await apiFetch(`/api/contacts?${params.toString()}`);
@@ -147,6 +160,10 @@ const loadContacts = async () => {
   }
 
   const data = await response.json();
+  currentSortBy = data.sortBy || currentSortBy;
+  currentSortDir = data.sortDir || currentSortDir;
+  sortBySelect.value = currentSortBy;
+  updateSortDirectionButton();
   renderRows(data.contacts || []);
   totalPages = data.totalPages || 1;
   updateFooter(data.totalContacts || 0);
@@ -273,6 +290,19 @@ nextPageBtn.addEventListener('click', () => {
   }
 });
 
+sortBySelect.addEventListener('change', (event) => {
+  currentSortBy = event.target.value;
+  currentPage = 1;
+  loadContacts();
+});
+
+sortDirectionBtn.addEventListener('click', () => {
+  currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
+  currentPage = 1;
+  updateSortDirectionButton();
+  loadContacts();
+});
+
 createBtn.addEventListener('click', () => openModal('create'));
 cancelModalBtn.addEventListener('click', closeModal);
 modal.addEventListener('click', (event) => {
@@ -327,6 +357,7 @@ tableBody.addEventListener('click', async (event) => {
 });
 
 document.querySelector('#page-size').textContent = pageSize;
+updateSortDirectionButton();
 loadContacts();
 
 logoutBtn.addEventListener('click', async () => {
