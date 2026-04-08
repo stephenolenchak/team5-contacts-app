@@ -15,7 +15,7 @@ Endpoints
 - POST /register (create user)
 - POST /login (authenticate)
 - POST /logout (end session)
-- GET /contacts?search=do (list or search)
+- GET /contacts?search=do&sortBy=lastName&sortDir=asc (list or search)
 - POST /contacts (create contact)
 
 TODO
@@ -48,3 +48,7 @@ POST /contacts
 
 Config
 Edit backend/api/config.php or set DB_HOST, DB_NAME, DB_USER, DB_PASS.
+
+Sorting
+- sortBy values: firstName, lastName, email, city, state
+- sortDir values: asc, desc
