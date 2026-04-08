@@ -35,6 +35,20 @@
             </div>
           </div>
 
+          <div class="sort-area">
+            <label class="search-label" for="sort-by">Sort by</label>
+            <div class="sort-controls">
+              <select id="sort-by" class="sort-select" aria-label="Sort contacts by">
+                <option value="lastName">Last name</option>
+                <option value="firstName">First name</option>
+                <option value="email">Email</option>
+                <option value="city">City</option>
+                <option value="state">State</option>
+              </select>
+              <button class="sort-dir-btn" id="sort-direction" type="button" aria-label="Sort ascending" title="Ascending">↑</button>
+            </div>
+          </div>
+
           <button class="create-btn" id="create-contact" type="button">
             <span class="plus">＋</span>
             CREATE CONTACT
