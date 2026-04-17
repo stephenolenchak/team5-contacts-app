@@ -1,1 +1,41 @@
 
+Lincoln Spencer - AI Assistance Disclosure
+
+This project was developed with assistance from generative AI tools:
+
+Tools: GitHub Copilot CLI (Opus 4.6), ChatGPT (v5.4)
+Dates: April 2026
+Scope: Git repository management, resume parsing, and API debugging
+Use:
+ Code organization: Used GitHub Copilot CLI to separate large git pushes into smaller, more organized commits for improved readability.
+ Debugging: Used ChatGPT to troubleshoot and resolve resume parsing issues, specifically addressing LaTeX artifacts and handling Gemini API flags.
+All AI-generated code and suggestions were reviewed, tested, and modified to meet project requirements. The final implementation reflects my understanding of the concepts.
+
+Dylan Mcintee - AI Assistance Disclosure
+
+This project was developed with assistance from generative AI tools:
+
+Tools: ChatGPT (GPT-5.3), accessed via chatgpt.com
+Dates: April 2026
+Scope: Backend development, API implementation, and Docker configuration
+Use 1: AI was used to help generate and refine backend code, including API routes and overall application structure.
+Use 2: AI assisted with debugging, troubleshooting, and testing the application, including resolving setup issues and validating API endpoints.
+All AI-generated code and suggestions were reviewed, tested, and modified to meet project requirements. The final implementation reflects my understanding of the concepts used in this project.
+
+Sharath Kukeswaran - AI Assistance Disclosure
+This project was developed with assistance from generative AI tools: GitHub Copilot CLI (Opus 4.6), ChatGPT (v5.4)]
+Dates: April 2026 Scope: MongoDB database architecture, Mongoose schema modeling, and testing environment setupUse:Schema Modeling & Relations: 
+Used Claude to assist in drafting and structuring Mongoose schemas, indexes, and relations. This included mapping out the core entities for the ERD: USERS, RESUMES, RESUME_VERSIONS, RESUME_SUGGESTIONS, JOBS, JOB_MATCHES, and APPLICATIONS.Testing Configuration:
+Consulted GPT to help configure and implement MongoMemoryServer to effectively isolate test data for our unit and integration tests.
+
+Stephen Olenchak - AI Assistance Disclosure 
+This project was developed with assistance from generative AI tools: [e.g., Claude , Gemini ]
+Dates: April 2026 Scope: React web application development, CSS styling, and asynchronous API integration.
+Use: UI Component Structure: Used Claude to assist in building the React, CSS, and TypeScript-ready frontend structure , which helped in maintaining a unified visual identity across the application.
+API Requests: Consulted Gemini to help formulate asynchronous API calls , particularly for managing the multipart requests required for user PDF resume uploads.
+
+Hayden Fowler - AI Assistance Disclosure
+This project was developed with assistance from generative AI tools:Tools: Claude Opus 4.6, ChatGPT v5.4]
+Dates: April 2026 Scope: Flutter mobile application development and cross-platform UI planning.
+Use: Cross-Platform UI: Used Claude to assist in building the Flutter app to ensure a consistent cross-platform experience. This included planning and structuring core UI components like the AppShell, DashboardScreen, and ResumeDetailScreen.
+Service Integration: Consulted Chatgpt to help structure the Dart/Flutter service classes (AuthService, ResumeService, AnalysisService) to handle API requests and state management within the mobile environment
