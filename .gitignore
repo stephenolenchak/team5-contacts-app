@@ -1,3 +1,6 @@
 .env
 .env.*
 docker-compose.override.yml
+node_modules/
+coverage/
+npm-debug.log*

@@ -177,6 +177,7 @@ const closeModal = () => {
 
 const handleSave = async (event) => {
   event.preventDefault();
+  setStatus('');
 
   const payload = {
     firstName: contactForm.firstName.value.trim(),
@@ -189,6 +190,16 @@ const handleSave = async (event) => {
     zipCode: contactForm.zipCode.value.trim(),
     notes: contactForm.notes.value.trim(),
   };
+
+  const validationError =
+    typeof window.validateContactPayload === 'function'
+      ? window.validateContactPayload(payload)
+      : null;
+
+  if (validationError) {
+    setStatus(validationError, true);
+    return;
+  }
 
   const isEditing = Boolean(editingContactId);
   const endpoint = isEditing

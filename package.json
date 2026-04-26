@@ -1,0 +1,26 @@
+{
+  "name": "team5-contacts-app",
+  "version": "1.0.0",
+  "description": "Team 5",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "lint": "eslint frontend/js tests --ext .js",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephenolenchak/team5-contacts-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephenolenchak/team5-contacts-app/issues"
+  },
+  "homepage": "https://github.com/stephenolenchak/team5-contacts-app#readme",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0"
+  }
+}
