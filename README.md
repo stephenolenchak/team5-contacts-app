@@ -45,6 +45,7 @@ This project was developed with assistance from generative AI tools:
 - **Use 2**: AI provided use with docker file and docker compose examples that we adapted to simplify the deployment of the application.
 - **Use 3**: AI gave a template API that we then used to fit the requirements and constraints of the small project.
 - **Use 4**: AI gave a template Databse that we then used to fit the requirements and constraints of the small project and with the help of the colors Lab databse, I was able to effectively create the database.
+- Also used AI to help me with Assigment 5
 
 All AI-generated code was reviewed, tested, and modified to meet
 assignment requirements. Final implementation reflects my understanding
