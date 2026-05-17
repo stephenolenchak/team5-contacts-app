@@ -170,6 +170,23 @@ if ($resource === 'contacts') {
         $pageSize = max(1, min(100, (int)($_GET['pageSize'] ?? 10))); // limit max pageSize to 100
         $offset = ($page - 1) * $pageSize;
 
+        $allowedSortColumns = [
+            'firstName' => 'firstName',
+            'lastName' => 'lastName',
+            'email' => 'email',
+            'city' => 'city',
+            'state' => 'state'
+        ];
+        $sortByKey = $_GET['sortBy'] ?? 'lastName';
+        if (!array_key_exists($sortByKey, $allowedSortColumns)) {
+            $sortByKey = 'lastName';
+        }
+        $sortBy = $allowedSortColumns[$sortByKey];
+        $sortDir = strtolower(trim($_GET['sortDir'] ?? 'asc')) === 'desc' ? 'DESC' : 'ASC';
+        $sortDirKey = $sortDir === 'DESC' ? 'desc' : 'asc';
+        $secondarySort = $sortBy === 'firstName' ? 'lastName' : 'firstName';
+        $orderByClause = ' ORDER BY ' . $sortBy . ' ' . $sortDir . ', ' . $secondarySort . ' ASC';
+
         $pdo = db();
         
         // First, get the total count of contacts
@@ -189,7 +206,7 @@ if ($resource === 'contacts') {
         
         // Then, get the paginated contacts
         if ($search === '') {
-            $stmt = $pdo->prepare('SELECT * FROM Contacts WHERE userId = ? ORDER BY lastName, firstName LIMIT ? OFFSET ?');
+            $stmt = $pdo->prepare('SELECT * FROM Contacts WHERE userId = ?' . $orderByClause . ' LIMIT ? OFFSET ?');
             $stmt->bindValue(1, $userId, PDO::PARAM_INT);
             $stmt->bindValue(2, $pageSize, PDO::PARAM_INT);
             $stmt->bindValue(3, $offset, PDO::PARAM_INT);
@@ -199,7 +216,7 @@ if ($resource === 'contacts') {
             $stmt = $pdo->prepare(
                 'SELECT * FROM Contacts WHERE userId = ? AND (' .
                 'firstName LIKE ? OR lastName LIKE ? OR email LIKE ? OR phone LIKE ?' .
-                ') ORDER BY lastName, firstName LIMIT ? OFFSET ?'
+                ')' . $orderByClause . ' LIMIT ? OFFSET ?'
             );
             $stmt->bindValue(1, $userId, PDO::PARAM_INT);
             $stmt->bindValue(2, $like, PDO::PARAM_STR);
@@ -217,6 +234,8 @@ if ($resource === 'contacts') {
             'totalContacts' => $totalContacts,
             'page' => $page,
             'pageSize' => $pageSize,
+            'sortBy' => $sortByKey,
+            'sortDir' => $sortDirKey,
             'totalPages' => (int)ceil($totalContacts / $pageSize)
         ]);
     }
